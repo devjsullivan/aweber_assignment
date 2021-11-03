@@ -34,6 +34,8 @@ class widgetDbCore:
         for w in widgets:
             # w[0] returns the first column in the query (Name), row[1] returns Number column, etc:
             print('{0} : {1}, {2}, {3}, {4}'.format(w[0], w[1], w[2], w[3], w[4]))
+    def update_number(self, numIn: int):
+        # update it
     def __del__(self):
         # when this class is deleted, close our DB. Because, hey, it's the right thing to do.
         self._mDb.close()
