@@ -1,71 +1,53 @@
-from widgetDbCore import widgetDbCore
+import sqlite3
+import time
+from classes.widgetDbCore import widgetDbCore
 
 if __name__ == '__main__':
     # This will be a test driver until we can get to creating unit test:
     myWidgetDbCore = widgetDbCore()
-    print("widgetDbCore should init empty, so let's verify by calling list_all(), (after asterisks):")
+    print("widgetDbCore should initialize to be empty, so let's verify by calling list_all(), (after asterisks):")
     print("***************************")
-    myWidgetDbCorelist_all()
+    myWidgetDbCore.list_all()
     print("***************************")
     print("list_all() just called. Was anything output between the asterisks?:")
-    exit()
+    print("Okay, now let's add some rows to the database (starting with Name Marnie and Number 2), then list_all() again, (after asterisks):")
+    myWidgetDbCore.create("Marnie", 2)
+    print("***************************")
+    myWidgetDbCore.list_all()
+    print("Okay, now let's try to add a row with name size greater than 64 to prove Name length is monitored:")
+    myWidgetDbCore.create("Marnie12345678901234567890012345678900123456789001234567890012345678900123456789001234567890", 2)
+    print("***************************")
+    myWidgetDbCore.list_all()
+    print("***************************")
+    print("list_all() just called. There should be one row listed between the asterisks?:")
+    print("Now let's update this row. id should be 1 by default. So let's change the name from Marnie to Charlie. Before we do this, let's sleep a few seconds as well so we can see Update time modified, too.")
+    time.sleep(5)
+    myWidgetDbCore.update_name_by_id(1, "Charlie")
+    print("***************************")
+    myWidgetDbCore.list_all()
+    print("***************************")
+    print("update_name_by_id() then list_all()  just called. Name should be changed & update time a little later, no?")
+    print("Now let's update the number via name. Using Charlie, let's verify the update_number_by_name function and change Number to 5, also sleeping 10 seconds to verify update time works.")
+    time.sleep(10)
+    myWidgetDbCore.update_number_by_name("Charlie", 5)
+    print("***************************")
+    myWidgetDbCore.list_all()
+    print("***************************")
+    print("update_number_by_name() then list_all()  just called. Number should be changed & update time a little later, no?")
+    print("Now let's try out the delete function, and delete record with id = 1 (as that's all we have).")
+    print("***************************")
+    myWidgetDbCore.list_all()
+    print("***************************")
+    print("list_all() before delete() just called between asterisks. Number of records should still be one.")
+    print("***************************")
+    print("Calling delete now:")
+    myWidgetDbCore.delete(1)
+    print("***************************")
+    print("***************************")
+    myWidgetDbCore.list_all()
+    print("***************************")
+    print("list_all() called after delete() between asterisks. Number of records should be zero.")
 
 
-    print_hi('PyCharm')
-    ret: int = usingTypeAnnots(6,8)
-
-    print("Here: ", ret)
-
-# Create a database in RAM and connect:
-widgetDb = sqlite3.connect(':memory:')
-# get cursor object
-cursor = widgetDb.cursor()
-# create widget table
-cursor.execute('''
-    CREATE TABLE widgets(id INTEGER PRIMARY KEY, Name CHAR(64),
-                       Number INT, Created DATE unique, Updated DATE)
-''')
-widgetDb.commit()
-
-#cursor = widgetDb.cursor()
-#cursor.execute('''DROP TABLE widgets''')
-#widgetDb.commit()
-
-
-cursor = widgetDb.cursor()
-name1 = 'Andres'
-phone1 = '3366858'
-email1 = 'user@example.com'
-# A very secure password
-password1 = '12345'
-
-name2 = 'John'
-phone2 = '5557241'
-email2 = 'johndoe@example.com'
-password2 = 'abcdef'
-
-# Insert user 1
-cursor.execute('''INSERT INTO widgets(Name, Number, Created, Updated)
-                  VALUES(?,?,?,?)''', (name1, phone1, email1, password1))
-print('First user inserted')
-
-# Insert user 2
-cursor.execute('''INSERT INTO widgets(Name, Number, Created, Updated)
-                  VALUES(?,?,?,?)''', (name2, phone2, email2, password2))
-print('Second user inserted')
-
-widgetDb.commit()
-
-cursor.execute('''SELECT name, email, phone FROM users''')
-user1 = cursor.fetchone() #retrieve the first row
-print("First row:\n")
-print(user1[0]) #Print the first column retrieved(user's name)
-all_rows = cursor.fetchall()
-for row in all_rows:
-    # row[0] returns the first column in the query (name), row[1] returns email column.
-    print('{0} : {1}, {2}'.format(row[0], row[1], row[2]))
-
-# are we done with the database? if so, close:
-widgetDb.close()
 
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/
