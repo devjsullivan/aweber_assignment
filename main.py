@@ -1,19 +1,16 @@
-# coding=utf-8
-import sqlite3
-# This is a sample Python script.
+from widgetDbCore import widgetDbCore
 
-# Press ⌃R to execute it or replace it with your code.
-# Press Double ⇧ to search everywhere for classes, files, tool windows, actions, and settings.
-def usingTypeAnnots(x: int, y:int):
-    return x+y
-
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print("Hi, {0}".format(name))  # Press ⌘F8 to toggle the breakpoint.
-
-
-# Press the green button in the gutter to run the script.
 if __name__ == '__main__':
+    # This will be a test driver until we can get to creating unit test:
+    myWidgetDbCore = widgetDbCore()
+    print("widgetDbCore should init empty, so let's verify by calling list_all(), (after asterisks):")
+    print("***************************")
+    myWidgetDbCorelist_all()
+    print("***************************")
+    print("list_all() just called. Was anything output between the asterisks?:")
+    exit()
+
+
     print_hi('PyCharm')
     ret: int = usingTypeAnnots(6,8)
 
