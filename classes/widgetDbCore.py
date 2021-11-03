@@ -75,7 +75,6 @@ class widgetDbCore:
         pretty_date_and_time = current_date_and_time.strftime('%Y-%m-%d %H:%M:%S')
         # Update a row's name & update time by id
         update_query = """Update widgets SET Number = """ + "'" + str(numIn) + "', Updated = '" + pretty_date_and_time + "' WHERE Name = '""" + nameIn + """';"""
-        print("&&&&&&&")
         print(update_query)
         self._mcursor.execute(update_query)
         self._mDb.commit()
